@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你有多爱自己 · 心理测试</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e8b4b8;
+            --primary-light: #fdf2f3;
+            --primary-dark: #d4929a;
+            --secondary: #b8a9c9;
+            --secondary-light: #f0ebf5;
+            --accent: #f5d0d3;
+            --rose: #c9626b;
+            --rose-light: #e89a9f;
+            --leaf: #8fa68a;
+            --leaf-light: #c5d4c2;
+            --text-dark: #4a3f3f;
+            --text-medium: #6a5f5f;
+            --text-light: #9a8f8f;
+            --bg-cream: #fffbfa;
+            --bg-pink: #fef8f8;
+            --white: #ffffff;
+            --shadow: rgba(200, 150, 150, 0.12);
+            --shadow-hover: rgba(200, 150, 150, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-cream);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ==================== 首页设计 ==================== */
+        .intro-section {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 花卉背景装饰 */
+        .floral-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .rose {
+            position: absolute;
+            opacity: 0.6;
+        }
+
+        .rose-1 {
+            top: 5%;
+            right: -5%;
+            width: 280px;
+            height: 280px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .rose-2 {
+            bottom: 10%;
+            left: -8%;
+            width: 320px;
+            height: 320px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .rose-3 {
+            top: 40%;
+            right: 5%;
+            width: 120px;
+            height: 120px;
+            opacity: 0.4;
+            animation: float 6s ease-in-out infinite 2s;
+        }
+
+        .rose-4 {
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            opacity: 0.3;
+            animation: float 7s ease-in-out infinite 1s;
+        }
+
+        .petal {
+            position: absolute;
+            width: 20px;
+            height: 25px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.5;
+            animation: fall linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* SVG玫瑰花 */
+        .rose svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 首页内容 */
+        .hero {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 20px 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(232, 180, 184, 0.3);
+        }
+
+        .hero-icon svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.8rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, var(--rose), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-medium);
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+
+        /* 介绍卡片 */
+        .intro-card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 45px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro-card h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .intro-card p {
+            color: var(--text-medium);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .theory-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .theory-tag {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            border: 1px solid rgba(232, 180, 184, 0.3);
+        }
+
+        .rating-guide {
+            background: linear-gradient(135deg, var(--bg-pink), var(--primary-light));
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .rating-guide h3 {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 15px 0;
+        }
+
+        .rating-scale::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--leaf-light), var(--primary), var(--rose));
+            border-radius: 2px;
+            transform: translateY(-50%);
+        }
+
+        .scale-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .scale-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--white);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            margin-bottom: 8px;
+        }
+
+        .scale-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+            max-width: 50px;
+        }
+
+        /* 开始按钮 */
+        .start-btn {
+            display: block;
+            width: 100%;
+            max-width: 280px;
+            margin: 35px auto 0;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--rose-light), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(201, 98, 107, 0.3);
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .start-btn:hover::before {
+            left: 100%;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(201, 98, 107, 0.4);
+        }
+
+        /* ==================== 测试页面 ==================== */
+        .test-section {
+            display: none;
+            min-height: 100vh;
+            padding: 30px 20px;
+            background: linear-gradient(180deg, var(--bg-cream) 0%, var(--primary-light) 100%);
+        }
+
+        .progress-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 25px var(--shadow);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .progress-text span {
+            color: var(--rose);
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--leaf), var(--primary), var(--rose));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* 问题卡片 */
+        .question-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 15px 50px var(--shadow);
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .question-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--rose-light));
+            color: var(--white);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            line-height: 2;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* 滑块设计 */
+        .slider-container {
+            padding: 20px 10px;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .slider-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: center;
+            flex: 1;
+        }
+
+        .slider-label.active {
+            color: var(--rose);
+            font-weight: 500;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .slider-track {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--leaf-light), var(--primary-light), var(--accent));
+            border-radius: 4px;
+            transform: translateY(-50%);
+        }
+
+        .slider-track-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--leaf), var(--primary), var(--rose));
+            border-radius: 4px;
+            transform: translateY(-50%);
+            transition: width 0.2s ease;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border: 4px solid var(--rose);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(201, 98, 107, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(201, 98, 107, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border: 4px solid var(--rose);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(201, 98, 107, 0.3);
+        }
+
+        .slider-value {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: var(--rose);
+            font-weight: 500;
+            min-height: 30px;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            padding: 0 2px;
+            pointer-events: none;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .slider-dot.active {
+            background: var(--rose);
+            border-color: var(--rose);
+        }
+
+        /* 导航按钮 */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 16px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-btn.prev {
+            background: var(--white);
+            color: var(--text-medium);
+            border: 2px solid var(--primary);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--primary-light);
+            color: var(--text-dark);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--rose-light), var(--primary-dark));
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(201, 98, 107, 0.3);
+        }
+
+        .nav-btn.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(201, 98, 107, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ==================== 结果页面 ==================== */
+        .result-section {
+            display: none;
+            padding: 30px 20px;
+            background: linear-gradient(180deg, var(--bg-cream) 0%, var(--primary-light) 50%, var(--bg-cream) 100%);
+        }
+
+        .result-header {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .result-header h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .result-header p {
+            color: var(--text-medium);
+        }
+
+        .score-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 15px 50px var(--shadow);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.1;
+        }
+
+        .total-score {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--rose), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 12px 35px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 25px;
+            position: relative;
+        }
+
+        .level-high {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+        }
+
+        .level-medium {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            color: #856404;
+        }
+
+        .level-low {
+            background: linear-gradient(135deg, #ffe5d0, #ffd4b8);
+            color: #8a5a2b;
+        }
+
+        .level-critical {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+        }
+
+        /* 新版雷达图 */
+        .radar-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 15px 50px var(--shadow);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .radar-card h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .radar-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+        }
+
+        .radar-container {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .radar-center-score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .radar-center-score .label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .radar-center-score .value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--rose);
+        }
+
+        /* 图例 */
+        .radar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-color.your-score {
+            background: rgba(201, 98, 107, 0.6);
+            border: 2px solid var(--rose);
+        }
+
+        .legend-color.average {
+            background: rgba(184, 169, 201, 0.4);
+            border: 2px solid var(--secondary);
+        }
+
+        /* 解读卡片 */
+        .interpretation-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 45px;
+            box-shadow: 0 15px 50px var(--shadow);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .interpretation-card h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dimension-section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px dashed var(--primary-light);
+        }
+
+        .dimension-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .dimension-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dimension-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .dimension-content {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            line-height: 2;
+        }
+
+        .dimension-content p {
+            margin-bottom: 15px;
+        }
+
+        .suggestion-box {
+            background: linear-gradient(135deg, var(--bg-pink), var(--primary-light));
+            border-radius: 20px;
+            padding: 20px 25px;
+            margin-top: 15px;
+            border-left: 4px solid var(--rose-light);
+        }
+
+        .suggestion-box h4 {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .suggestion-box p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        /* 总结卡片 */
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            border-radius: 30px;
+            padding: 45px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '💝';
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 3rem;
+            opacity: 0.15;
+        }
+
+        .summary-card h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .summary-card p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 2.2;
+        }
+
+        /* 书单推荐 */
+        .booklist-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 45px;
+            box-shadow: 0 15px 50px var(--shadow);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .booklist-card h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .booklist-card > p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .book-item {
+            display: flex;
+            gap: 20px;
+            padding: 25px;
+            background: var(--bg-cream);
+            border-radius: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .book-item:hover {
+            transform: translateX(5px);
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .book-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .book-info h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .book-author {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .book-desc {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            line-height: 1.8;
+        }
+
+        .book-tip {
+            background: linear-gradient(135deg, var(--bg-pink), var(--accent));
+            border-radius: 15px;
+            padding: 18px 22px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* 注意事项 */
+        .notice-card {
+            background: var(--bg-cream);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--secondary);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.7s both;
+        }
+
+        .notice-card h3 {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .notice-card p {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            line-height: 1.9;
+        }
+
+        /* 重新测试按钮 */
+        .restart-btn {
+            display: block;
+            width: 100%;
+            max-width: 220px;
+            margin: 20px auto 40px;
+            padding: 16px 40px;
+            background: var(--white);
+            color: var(--rose);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: linear-gradient(135deg, var(--rose-light), var(--primary-dark));
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+
+            .intro-card, .question-card, .score-card, 
+            .radar-card, .interpretation-card, .booklist-card,
+            .summary-card {
+                padding: 30px 25px;
+                border-radius: 25px;
+            }
+
+            .rose-1 { width: 180px; height: 180px; }
+            .rose-2 { width: 200px; height: 200px; }
+            .rose-3, .rose-4 { display: none; }
+
+            .slider-label {
+                font-size: 0.7rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .book-item {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .radar-legend {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 首页 -->
+    <div id="intro-section" class="intro-section">
+        <!-- 花卉背景 -->
+        <div class="floral-bg">
+            <!-- 玫瑰花1 - 右上 -->
+            <div class="rose rose-1">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="roseGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#e8b4b8"/>
+                            <stop offset="50%" style="stop-color:#d4929a"/>
+                            <stop offset="100%" style="stop-color:#c9626b"/>
+                        </linearGradient>
+                        <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8fa68a"/>
+                            <stop offset="100%" style="stop-color:#6b8a66"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- 花瓣 -->
+                    <ellipse cx="100" cy="85" rx="35" ry="45" fill="url(#roseGrad1)" transform="rotate(-30 100 100)"/>
+                    <ellipse cx="100" cy="85" rx="35" ry="45" fill="url(#roseGrad1)" transform="rotate(30 100 100)"/>
+                    <ellipse cx="100" cy="85" rx="35" ry="45" fill="url(#roseGrad1)" transform="rotate(-60 100 100)" opacity="0.9"/>
+                    <ellipse cx="100" cy="85" rx="35" ry="45" fill="url(#roseGrad1)" transform="rotate(60 100 100)" opacity="0.9"/>
+                    <ellipse cx="100" cy="85" rx="30" ry="40" fill="url(#roseGrad1)" transform="rotate(0 100 100)" opacity="0.95"/>
+                    <ellipse cx="100" cy="85" rx="30" ry="40" fill="url(#roseGrad1)" transform="rotate(90 100 100)" opacity="0.85"/>
+                    <circle cx="100" cy="90" r="18" fill="#c9626b" opacity="0.8"/>
+                    <circle cx="100" cy="90" r="10" fill="#a84850"/>
+                    <!-- 叶子 -->
+                    <ellipse cx="55" cy="150" rx="25" ry="12" fill="url(#leafGrad)" transform="rotate(-45 55 150)"/>
+                    <ellipse cx="145" cy="150" rx="25" ry="12" fill="url(#leafGrad)" transform="rotate(45 145 150)"/>
+                    <path d="M100 120 Q100 180 100 180" stroke="#6b8a66" stroke-width="4" fill="none"/>
+                </svg>
+            </div>
+            <!-- 玫瑰花2 - 左下 -->
+            <div class="rose rose-2">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="100" cy="85" rx="38" ry="48" fill="url(#roseGrad1)" transform="rotate(-25 100 100)"/>
+                    <ellipse cx="100" cy="85" rx="38" ry="48" fill="url(#roseGrad1)" transform="rotate(25 100 100)"/>
+                    <ellipse cx="100" cy="85" rx="38" ry="48" fill="url(#roseGrad1)" transform="rotate(-55 100 100)" opacity="0.9"/>
+                    <ellipse cx="100" cy="85" rx="38" ry="48" fill="url(#roseGrad1)" transform="rotate(55 100 100)" opacity="0.9"/>
+                    <ellipse cx="100" cy="85" rx="32" ry="42" fill="url(#roseGrad1)" transform="rotate(0 100 100)" opacity="0.95"/>
+                    <ellipse cx="100" cy="85" rx="32" ry="42" fill="url(#roseGrad1)" transform="rotate(90 100 100)" opacity="0.85"/>
+                    <circle cx="100" cy="90" r="20" fill="#c9626b" opacity="0.8"/>
+                    <circle cx="100" cy="90" r="12" fill="#a84850"/>
+                    <ellipse cx="50" cy="155" rx="28" ry="14" fill="url(#leafGrad)" transform="rotate(-40 50 155)"/>
+                    <ellipse cx="150" cy="155" rx="28" ry="14" fill="url(#leafGrad)" transform="rotate(40 150 155)"/>
+                    <path d="M100 125 Q100 185 100 185" stroke="#6b8a66" stroke-width="5" fill="none"/>
+                </svg>
+            </div>
+            <!-- 小玫瑰3 -->
+            <div class="rose rose-3">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="100" cy="90" rx="30" ry="40" fill="#f5d0d3" transform="rotate(-30 100 100)"/>
+                    <ellipse cx="100" cy="90" rx="30" ry="40" fill="#f5d0d3" transform="rotate(30 100 100)"/>
+                    <ellipse cx="100" cy="90" rx="25" ry="35" fill="#e8b4b8" transform="rotate(0 100 100)"/>
+                    <circle cx="100" cy="95" r="15" fill="#d4929a"/>
+                </svg>
+            </div>
+            <!-- 小玫瑰4 -->
+            <div class="rose rose-4">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="100" cy="90" rx="28" ry="38" fill="#f5d0d3" transform="rotate(-35 100 100)"/>
+                    <ellipse cx="100" cy="90" rx="28" ry="38" fill="#f5d0d3" transform="rotate(35 100 100)"/>
+                    <ellipse cx="100" cy="90" rx="22" ry="32" fill="#e8b4b8" transform="rotate(0 100 100)"/>
+                    <circle cx="100" cy="95" r="12" fill="#d4929a"/>
+                </svg>
+            </div>
+            <!-- 飘落的花瓣 -->
+            <div class="petal" style="left: 10%; animation-duration: 12s; animation-delay: 0s;"></div>
+            <div class="petal" style="left: 25%; animation-duration: 15s; animation-delay: 2s;"></div>
+            <div class="petal" style="left: 45%; animation-duration: 18s; animation-delay: 5s;"></div>
+            <div class="petal" style="left: 65%; animation-duration: 14s; animation-delay: 3s;"></div>
+            <div class="petal" style="left: 80%; animation-duration: 16s; animation-delay: 7s;"></div>
+            <div class="petal" style="left: 90%; animation-duration: 13s; animation-delay: 1s;"></div>
+        </div>
+
+        <div class="container">
+            <div class="hero">
+                <div class="hero-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#heartGrad)"/>
+                        <defs>
+                            <linearGradient id="heartGrad" x1="2" y1="3" x2="22" y2="21">
+                                <stop offset="0%" style="stop-color:#e8b4b8"/>
+                                <stop offset="100%" style="stop-color:#c9626b"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1>你有多爱自己</h1>
+                <p>一份关于自我关系的温柔探索<br>帮助你更好地了解自己</p>
+            </div>
+
+            <div class="intro-card">
+                <h2>🌹 关于这份测试</h2>
+                <p>这份测试基于多个经典心理学理论设计，从六个维度全面评估你"爱自己"的能力。</p>
+                <p>测试共25道题，大约需要5-8分钟完成。请根据你的真实情况作答，诚实面对自己才能获得最有价值的反馈。</p>
+                
+                <div class="theory-tags">
+                    <span class="theory-tag">自我接纳</span>
+                    <span class="theory-tag">自尊水平</span>
+                    <span class="theory-tag">自我同情</span>
+                    <span class="theory-tag">自我效能</span>
+                    <span class="theory-tag">心理边界</span>
+                    <span class="theory-tag">身体关怀</span>
+                </div>
+
+                <div class="rating-guide">
+                    <h3>评分方式</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-medium); margin-bottom: 15px;">
+                        拖动滑块选择最符合你情况的位置
+                    </p>
+                    <div class="rating-scale">
+                        <div class="scale-point">
+                            <div class="scale-dot"></div>
+                            <span class="scale-label">完全不符合</span>
+                        </div>
+                        <div class="scale-point">
+                            <div class="scale-dot"></div>
+                            <span class="scale-label">不太符合</span>
+                        </div>
+                        <div class="scale-point">
+                            <div class="scale-dot"></div>
+                            <span class="scale-label">一般</span>
+                        </div>
+                        <div class="scale-point">
+                            <div class="scale-dot"></div>
+                            <span class="scale-label">比较符合</span>
+                        </div>
+                        <div class="scale-point">
+                            <div class="scale-dot"></div>
+                            <span class="scale-label">完全符合</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="start-btn" onclick="startTest()">开始测试</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 测试页面 -->
+    <div id="test-section" class="test-section">
+        <div class="container">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span class="progress-text">第 <span id="current-q">1</span> / 25 题</span>
+                    <span class="progress-text"><span id="progress-percent">0</span>%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="question-card" id="question-card">
+                <!-- 动态填充 -->
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn prev" id="prev-btn" onclick="prevQuestion()">上一题</button>
+                <button class="nav-btn next" id="next-btn" onclick="nextQuestion()">下一题</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果页面 -->
+    <div id="result-section" class="result-section">
+        <div class="container">
+            <div class="result-header">
+                <h1>🌷 测试结果</h1>
+                <p>以下是你的"爱自己"程度分析报告</p>
+            </div>
+
+            <div class="score-card">
+                <div class="total-score" id="total-score">0</div>
+                <div class="score-label">总分（满分125分）</div>
+                <div class="level-badge" id="level-badge">整体水平</div>
+            </div>
+
+            <div class="radar-card">
+                <h2>📊 各维度得分分布</h2>
+                <div class="radar-container">
+                    <canvas id="radar-chart"></canvas>
+                    <div class="radar-center-score">
+                        <div class="label">综合</div>
+                        <div class="value" id="radar-center-value">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interpretation-card">
+                <h2>📝 详细解读</h2>
+                <div id="interpretation-content">
+                    <!-- 动态填充 -->
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h2>💝 总体来说</h2>
+                <p id="summary-content"></p>
+            </div>
+
+            <div class="booklist-card">
+                <h2>📚 为你推荐的书单</h2>
+                <p>根据你的测试结果，我们为你挑选了以下书籍：</p>
+                <div id="booklist-content">
+                    <!-- 动态填充 -->
+                </div>
+                <div class="book-tip">
+                    💡 不必一口气读完所有书，选择一本最吸引你的，慢慢读就好。改变从来不是一蹴而就的事。
+                </div>
+            </div>
+
+            <div class="notice-card">
+                <h3>⚠️ 注意事项</h3>
+                <p>本测试为自我认知工具，不具备临床诊断效力。测试结果仅供参考，每个人的情况都有其独特性。若你长期处于自我否定的状态或感到难以独自改变，建议寻求专业心理咨询。</p>
+            </div>
+
+            <button class="restart-btn" onclick="restartTest()">重新测试</button>
+        </div>
+    </div>
+
+    <script>
+        // 题目数据（不显示维度和反向题标识）
+        const questions = [
+            { id: 1, dimension: '自我接纳', text: '当我发现自己在某方面不如身边的人时，我不会因此焦虑好几天或反复比较。', reverse: false },
+            { id: 2, dimension: '自我接纳', text: '我能接受自己过去犯过的错误，不会时不时想起来就懊悔自责。', reverse: false },
+            { id: 3, dimension: '自我接纳', text: '我经常因为自己的某些缺点（外貌、性格、能力等）而感到羞耻或自卑。', reverse: true },
+            { id: 4, dimension: '自我接纳', text: '当一件事没有做到完美时，我能告诉自己"已经尽力了，这样也可以"。', reverse: false },
+            { id: 5, dimension: '自尊水平', text: '即使没有人夸奖我、认可我，我依然觉得自己是一个有价值的人。', reverse: false },
+            { id: 6, dimension: '自尊水平', text: '当别人批评我或对我表达不满时，那些话会在我脑海中反复回放很久。', reverse: true },
+            { id: 7, dimension: '自尊水平', text: '我不需要通过获得他人的认可、点赞或好评来确认自己的价值。', reverse: false },
+            { id: 8, dimension: '自尊水平', text: '当我完成一件小事（比如早起、按时完成任务、坚持运动）时，我会在心里肯定自己"做得不错"。', reverse: false },
+            { id: 9, dimension: '自我同情', text: '当我情绪低落或遭遇挫折时，我会对自己说一些温暖鼓励的话，而不是责备自己"怎么这么没用"。', reverse: false },
+            { id: 10, dimension: '自我同情', text: '当我犯错或把事情搞砸后，我会在心里反复骂自己，很难原谅自己。', reverse: true },
+            { id: 11, dimension: '自我同情', text: '当我感到压力很大时，我会优先照顾自己的情绪和状态，而不是强迫自己硬撑。', reverse: false },
+            { id: 12, dimension: '自我同情', text: '我觉得自己值得被温柔对待——包括被自己温柔对待。', reverse: false },
+            { id: 13, dimension: '自我效能', text: '遇到困难或麻烦时，我相信自己有能力找到解决办法或应对方式。', reverse: false },
+            { id: 14, dimension: '自我效能', text: '即使可能会失败，我也愿意去尝试自己感兴趣的新事物。', reverse: false },
+            { id: 15, dimension: '自我效能', text: '我经常因为害怕做不好、怕丢脸，而放弃自己想要尝试的事情。', reverse: true },
+            { id: 16, dimension: '自我效能', text: '当我完成一项有难度的任务后，我会认可自己的努力和付出，而不是觉得"这没什么"。', reverse: false },
+            { id: 17, dimension: '心理边界', text: '当朋友或同事请我帮忙做一件我不想做的事时，我能比较坦然地表达拒绝。', reverse: false },
+            { id: 18, dimension: '心理边界', text: '我很难拒绝别人的请求，即使我内心很不情愿，也常常会答应。', reverse: true },
+            { id: 19, dimension: '心理边界', text: '当别人的言行让我感到不舒服或被冒犯时，我会及时表达自己的感受，而不是默默忍受。', reverse: false },
+            { id: 20, dimension: '心理边界', text: '我不会为了维持一段关系，而一再忍让对方的越界行为或不合理要求。', reverse: false },
+            { id: 21, dimension: '身体自我关怀', text: '当我感到疲惫时，我会主动休息或放慢节奏，而不是硬撑着继续。', reverse: false },
+            { id: 22, dimension: '身体自我关怀', text: '我会保证自己的基本睡眠时间，不会经常熬夜或牺牲睡眠去做其他事。', reverse: false },
+            { id: 23, dimension: '身体自我关怀', text: '我经常因为忙碌或其他原因而忘记吃饭、随便应付一顿，或者用垃圾食品代替正餐。', reverse: true },
+            { id: 24, dimension: '身体自我关怀', text: '我会定期给自己安排一些放松、愉悦的活动（散步、看电影、发呆……），即使它们看起来"没什么用"。', reverse: false },
+            { id: 25, dimension: '身体自我关怀', text: '当身体发出不适信号（头痛、胃痛、过度疲劳等）时，我常常选择忽视，觉得"忍忍就过去了"。', reverse: true }
+        ];
+
+        // 维度配置
+        const dimensions = {
+            '自我接纳': { questions: [1,2,3,4], maxScore: 20, icon: '🌱', color: '#8fa68a' },
+            '自尊水平': { questions: [5,6,7,8], maxScore: 20, icon: '✨', color: '#b8a9c9' },
+            '自我同情': { questions: [9,10,11,12], maxScore: 20, icon: '💗', color: '#e8b4b8' },
+            '自我效能': { questions: [13,14,15,16], maxScore: 20, icon: '💪', color: '#a5c4d4' },
+            '心理边界': { questions: [17,18,19,20], maxScore: 20, icon: '🛡️', color: '#c9d4a5' },
+            '身体自我关怀': { questions: [21,22,23,24,25], maxScore: 25, icon: '🌸', color: '#d4c9a5' }
+        };
+
+        // 书单数据
+        const books = {
+            '自我接纳': [
+                { title: '《被讨厌的勇气》', author: '岸见一郎 / 古贺史健', desc: '以对话形式解读阿德勒心理学，帮助你理解：接纳自己、不被他人评价绑架，是获得自由和幸福的起点。' },
+                { title: '《接纳不完美的自己》', author: '黛比·福特', desc: '教你如何与自己的阴影和解，把"不完美"转化为完整。' }
+            ],
+            '自尊水平': [
+                { title: '《恰如其分的自尊》', author: '克里斯托夫·安德烈', desc: '系统讲解自尊是什么、如何形成、如何修复，帮助你建立稳定而健康的自我价值感。' },
+                { title: '《自尊的六大支柱》', author: '纳撒尼尔·布兰登', desc: '自尊研究领域的奠基之作，提供具体的练习方法。' }
+            ],
+            '自我同情': [
+                { title: '《自我同情》', author: '克里斯汀·内夫', desc: '教你如何在困境中成为自己最好的朋友，而非最严厉的批评者。' },
+                { title: '《与自己和解》', author: '一行禅师', desc: '用温柔的语言教你通过正念与内心受伤的小孩和解。' }
+            ],
+            '自我效能': [
+                { title: '《终身成长》', author: '卡罗尔·德韦克', desc: '帮你理解能力是可以通过努力发展的，失败只是成长的一部分。' },
+                { title: '《自信的陷阱》', author: '路斯·哈里斯', desc: '帮助你带着恐惧和不确定依然迈出步伐。' }
+            ],
+            '心理边界': [
+                { title: '《边界》', author: '亨利·克劳德', desc: '关于心理边界的经典之作，帮助你学会在关系中保护自己。' },
+                { title: '《不懂拒绝的老好人》', author: '哈丽雅特·布莱克', desc: '专门写给"讨好型人格"的书，提供改变的具体方法。' }
+            ],
+            '身体自我关怀': [
+                { title: '《身体从未忘记》', author: '巴塞尔·范德考克', desc: '帮你理解为什么照顾身体就是照顾心灵。' },
+                { title: '《正念饮食》', author: '珍·克里斯特勒', desc: '帮助你重建与食物、与身体的和谐关系。' }
+            ],
+            '通用': [
+                { title: '《也许你该找个人聊聊》', author: '洛莉·戈特利布', desc: '一本温暖又深刻的心理学故事书，让你看到每个人都有自己的困境，成长是一生的旅程。' },
+                { title: '《活出生命的意义》', author: '维克多·弗兰克尔', desc: '帮你思考生命的意义，当你找到意义，自爱会自然发生。' }
+            ]
+        };
+
+        // 解读文案
+        const interpretations = {
+            '自我接纳': {
+                high: '你对自己的不完美有较高的接纳度。你能够承认自己的缺点和局限，但不会因此陷入过度的自我否定。过去的失误你可以放下，当前的不足你也能以平和的心态面对。',
+                medium: '你在自我接纳方面处于中等水平。大多数时候你能与自己的不完美和平共处，但在某些敏感领域，你仍然会感到不安或自责。',
+                mediumSuggestion: '试着把内心的"我不够好"换成"我还在成长中"。每当自责的念头出现时，问自己：这个缺点真的有我想的那么严重吗？',
+                low: '你在自我接纳方面遇到了一些困难。你可能经常因为自己的某些缺点而感到羞耻，对过去的错误耿耿于怀。',
+                lowSuggestion: '每天尝试写下一个你能接受的"小缺点"，然后告诉自己"这也是我的一部分，它不影响我作为一个人的价值"。'
+            },
+            '自尊水平': {
+                high: '你拥有稳定的自我价值感。你内心深处认可自己是一个值得被尊重、被喜欢的人，这种认可不依赖于外界的评价。',
+                medium: '你有一定的自尊基础，但它还不够稳固。当遭遇批评或否定时，你可能会开始怀疑自己的价值。',
+                mediumSuggestion: '练习在没有人夸奖你的时候也肯定自己。完成一件事后，在心里对自己说"我做得不错"。',
+                low: '你的自我价值感较为脆弱。你可能非常在意他人的看法和评价，别人的一句负面评价可能让你难受很久。',
+                lowSuggestion: '写下10个你欣赏自己的特质，把这张清单放在容易看到的地方，每天读一遍。'
+            },
+            '自我同情': {
+                high: '你懂得在困境中善待自己。当遭遇挫折或情绪低落时，你能够用温暖而非苛责的方式对待自己。',
+                medium: '你在自我同情方面有一定基础，但还不够稳定。有时候你能安慰自己，但有时候会陷入自我批评。',
+                mediumSuggestion: '下次责备自己时，想象你会怎么安慰最好的朋友，然后把那些话说给自己听。',
+                low: '你对自己很严苛。犯错之后，你会反复自责，很难原谅自己。',
+                lowSuggestion: '尝试写一封信给"正在难过的自己"，用对待最珍视的朋友的语气来写。'
+            },
+            '自我效能': {
+                high: '你对自己的能力有信心。遇到困难时，你倾向于相信自己能找到办法解决。',
+                medium: '你对自己的能力有一定信心，但在面对特定挑战时可能会动摇。',
+                mediumSuggestion: '记录下你过去成功解决问题的经历，时常翻看，提醒自己"我做到过，我可以再做到"。',
+                low: '你对自己的能力缺乏信心，可能经常觉得"我做不到"。',
+                lowSuggestion: '从一件很小的、你"有点害怕但想做"的事开始尝试，慢慢积累成功体验。'
+            },
+            '心理边界': {
+                high: '你有清晰的心理边界，懂得保护自己的需求和感受。面对不合理的要求，你能够坦然拒绝。',
+                medium: '你有一定的边界意识，但在实际执行时会有困难。你知道应该拒绝，但真到那个时刻可能会违心答应。',
+                mediumSuggestion: '练习使用"缓冲句式"，比如"我需要考虑一下"。慢慢地，你会发现拒绝并没有那么可怕。',
+                low: '你的心理边界比较模糊。你很难拒绝别人的请求，即使内心很不情愿。',
+                lowSuggestion: '从拒绝一个小请求开始练习，体验"拒绝后世界没有崩塌"的感觉。'
+            },
+            '身体自我关怀': {
+                high: '你不仅在心理上爱自己，在行动上也照顾着自己的身体。你把照顾好自己的身体当作一件重要的事。',
+                medium: '你有照顾身体的意识，但执行得不够稳定。可能有时会因为忙碌而忽视自己的身体需求。',
+                mediumSuggestion: '选择一个最容易改变的小习惯开始（比如每天固定时间吃早饭），先把这一个习惯稳定下来。',
+                low: '你的身体正在被忽视甚至透支。你可能经常熬夜、饮食不规律、忽视身体发出的不适信号。',
+                lowSuggestion: '请把"照顾身体"当作一项正式任务：今天要按时吃一顿正餐，这周要有一天在12点前睡觉。'
+            }
+        };
+
+        const summaries = {
+            high: '综合来看，你在"爱自己"这件事上做得很好。你有稳定的自我价值感，懂得接纳自己的不完美，能在困境中善待自己，有勇气去尝试和行动，也能在关系中守护自己的边界，并且在实际生活中照顾好自己的身体。继续保持，你已经在用一种健康的方式对待自己。',
+            medium: '综合来看，你整体上是爱自己的，具备一定的自我关怀能力。但从雷达图可以看出，你在某些维度还有提升空间。请重点关注图中凹陷的部分，那是你目前最需要关注和练习的方向。记住，爱自己是一种可以学习的能力。',
+            low: '综合来看，你在"爱自己"这件事上遇到了一些困难。从雷达图可以看出，你可能在多个维度都存在自我忽视或自我苛责的倾向。请认真阅读上述各维度的建议，从最小的改变开始行动。你值得被好好对待——首先，被你自己好好对待。',
+            critical: '综合来看，你目前与自己的关系比较紧张，可能在多个维度上都习惯了忽视、否定或苛责自己。这不是你的错，可能有很多原因让你形成了这样的模式。但你现在可以开始改变。请重点关注上述建议，从最小的事情开始"看见自己"。如果你感到很难独自改变，建议寻求专业心理咨询师的帮助。记住：你值得被爱，这不需要任何条件。'
+        };
+
+        // 滑块标签
+        const sliderLabels = ['完全不符合', '不太符合', '一般', '比较符合', '完全符合'];
+
+        // 状态变量
+        let currentQuestion = 0;
+        let answers = new Array(25).fill(null);
+
+        // 开始测试
+        function startTest() {
+            document.getElementById('intro-section').style.display = 'none';
+            document.getElementById('test-section').style.display = 'block';
+            showQuestion(0);
+        }
+
+        // 显示问题
+        function showQuestion(index) {
+            currentQuestion = index;
+            const q = questions[index];
+            const savedAnswer = answers[index] !== null ? answers[index] : 3;
+
+            let html = `
+                <div class="question-number">${index + 1}</div>
+                <div class="question-text">${q.text}</div>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        ${sliderLabels.map((label, i) => `
+                            <span class="slider-label ${savedAnswer === (i + 1) ? 'active' : ''}" data-value="${i + 1}">${label}</span>
+                        `).join('')}
+                    </div>
+                    <div class="slider-wrapper">
+                        <div class="slider-track"></div>
+                        <div class="slider-track-fill" id="track-fill" style="width: ${(savedAnswer - 1) * 25}%"></div>
+                        <div class="slider-dots">
+                            ${[1,2,3,4,5].map(i => `
+                                <div class="slider-dot ${i <= savedAnswer ? 'active' : ''}"></div>
+                            `).join('')}
+                        </div>
+                        <input type="range" min="1" max="5" value="${savedAnswer}" id="slider" oninput="updateSlider(this.value)">
+                    </div>
+                    <div class="slider-value" id="slider-value">${answers[index] !== null ? sliderLabels[savedAnswer - 1] : '请拖动滑块选择'}</div>
+                </div>
+            `;
+
+            document.getElementById('question-card').innerHTML = html;
+
+            // 更新进度
+            document.getElementById('current-q').textContent = index + 1;
+            const percent = Math.round((index / 25) * 100);
+            document.getElementById('progress-percent').textContent = percent;
+            document.getElementById('progress-fill').style.width = percent + '%';
+
+            // 更新按钮状态
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').textContent = index === 24 ? '查看结果' : '下一题';
+        }
+
+        // 更新滑块
+        function updateSlider(value) {
+            value = parseInt(value);
+            answers[currentQuestion] = value;
+
+            // 更新填充
+            document.getElementById('track-fill').style.width = ((value - 1) * 25) + '%';
+
+            // 更新点
+            document.querySelectorAll('.slider-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i < value);
+            });
+
+            // 更新标签
+            document.querySelectorAll('.slider-label').forEach((label, i) => {
+                label.classList.toggle('active', i === value - 1);
+            });
+
+            // 更新文字
+            document.getElementById('slider-value').textContent = sliderLabels[value - 1];
+        }
+
+        // 上一题
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            if (answers[currentQuestion] === null) {
+                answers[currentQuestion] = 3; // 默认中间值
+            }
+
+            if (currentQuestion < 24) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        // 计算分数
+        function calculateScores() {
+            const dimensionScores = {};
+            
+            for (const [name, config] of Object.entries(dimensions)) {
+                let score = 0;
+                for (const qId of config.questions) {
+                    const q = questions[qId - 1];
+                    let answer = answers[qId - 1] || 3;
+                    if (q.reverse) {
+                        answer = 6 - answer;
+                    }
+                    score += answer;
+                }
+                dimensionScores[name] = {
+                    score: score,
+                    maxScore: config.maxScore,
+                    percentage: Math.round((score / config.maxScore) * 100)
+                };
+            }
+
+            const totalScore = Object.values(dimensionScores).reduce((sum, d) => sum + d.score, 0);
+            const totalPercentage = Math.round((totalScore / 125) * 100);
+            
+            return { dimensionScores, totalScore, totalPercentage };
+        }
+
+        // 获取等级
+        function getLevel(score) {
+            if (score >= 100) return { level: 'high', text: '高度自爱', class: 'level-high' };
+            if (score >= 75) return { level: 'medium', text: '中度自爱', class: 'level-medium' };
+            if (score >= 50) return { level: 'low', text: '低度自爱', class: 'level-low' };
+            return { level: 'critical', text: '严重缺乏自爱', class: 'level-critical' };
+        }
+
+        // 获取维度等级
+        function getDimensionLevel(percentage) {
+            if (percentage >= 80) return 'high';
+            if (percentage >= 55) return 'medium';
+            return 'low';
+        }
+
+        // 显示结果
+        function showResults() {
+            document.getElementById('test-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+
+            const { dimensionScores, totalScore, totalPercentage } = calculateScores();
+            const levelInfo = getLevel(totalScore);
+
+            // 显示总分
+            document.getElementById('total-score').textContent = totalScore;
+            const badge = document.getElementById('level-badge');
+            badge.textContent = levelInfo.text;
+            badge.className = 'level-badge ' + levelInfo.class;
+
+            // 显示中心百分比
+            document.getElementById('radar-center-value').textContent = totalPercentage + '%';
+
+            // 绘制雷达图
+            drawRadarChart(dimensionScores);
+
+            // 生成解读
+            generateInterpretation(dimensionScores);
+
+            // 生成总结
+            document.getElementById('summary-content').textContent = summaries[levelInfo.level];
+
+            // 生成书单
+            generateBooklist(dimensionScores);
+
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 绘制雷达图（新样式）
+        function drawRadarChart(dimensionScores) {
+            const ctx = document.getElementById('radar-chart').getContext('2d');
+            
+            const labels = Object.keys(dimensions);
+            const yourData = labels.map(name => dimensionScores[name].percentage);
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '你的得分',
+                            data: yourData,
+                            backgroundColor: 'rgba(201, 98, 107, 0.35)',
+                            borderColor: 'rgba(201, 98, 107, 1)',
+                            borderWidth: 2.5,
+                            pointBackgroundColor: 'rgba(201, 98, 107, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(201, 98, 107, 1)',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            min: 0,
+                            ticks: {
+                                stepSize: 20,
+                                display: true,
+                                backdropColor: 'transparent',
+                                color: '#9a8f8f',
+                                font: {
+                                    size: 10
+                                },
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(180, 150, 150, 0.15)',
+                                circular: true
+                            },
+                            angleLines: {
+                                color: 'rgba(180, 150, 150, 0.2)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    family: "'Noto Sans SC', sans-serif"
+                                },
+                                color: '#4a3f3f'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 生成解读
+        function generateInterpretation(dimensionScores) {
+            let html = '';
+            
+            for (const [name, config] of Object.entries(dimensions)) {
+                const scoreData = dimensionScores[name];
+                const level = getDimensionLevel(scoreData.percentage);
+                const interp = interpretations[name];
+
+                html += `
+                    <div class="dimension-section">
+                        <div class="dimension-title">
+                            <span class="dimension-icon" style="background: ${config.color}30;">${config.icon}</span>
+                            ${name}
+                        </div>
+                        <div class="dimension-content">
+                            <p>${interp[level]}</p>
+                            ${level !== 'high' ? `
+                                <div class="suggestion-box">
+                                    <h4>💡 提升建议</h4>
+                                    <p>${interp[level + 'Suggestion']}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('interpretation-content').innerHTML = html;
+        }
+
+        // 生成书单
+        function generateBooklist(dimensionScores) {
+            const lowDimensions = [];
+            
+            for (const [name, scoreData] of Object.entries(dimensionScores)) {
+                if (scoreData.percentage < 60) {
+                    lowDimensions.push({ name, percentage: scoreData.percentage });
+                }
+            }
+
+            lowDimensions.sort((a, b) => a.percentage - b.percentage);
+            const topLowDimensions = lowDimensions.slice(0, 3);
+
+            let selectedBooks = [];
+
+            for (const dim of topLowDimensions) {
+                if (books[dim.name] && books[dim.name].length > 0) {
+                    selectedBooks.push(books[dim.name][0]);
+                }
+            }
+
+            selectedBooks.push(books['通用'][0]);
+
+            const uniqueBooks = [...new Map(selectedBooks.map(b => [b.title, b])).values()].slice(0, 4);
+
+            let html = '';
+            for (const book of uniqueBooks) {
+                html += `
+                    <div class="book-item">
+                        <div class="book-icon">📖</div>
+                        <div class="book-info">
+                            <h3>${book.title}</h3>
+                            <div class="book-author">${book.author}</div>
+                            <div class="book-desc">${book.desc}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('booklist-content').innerHTML = html;
+        }
+
+        // 重新测试
+        function restartTest() {
+            answers = new Array(25).fill(null);
+            currentQuestion = 0;
+            document.getElementById('result-section').style.display = 'none';
+            document.getElementById('intro-section').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
